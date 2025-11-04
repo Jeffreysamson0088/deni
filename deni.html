@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Deni 💖</title>
+
+<!-- Google Font for cursive/romantic style -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body { 
+    font-family: 'Dancing Script', cursive; 
+    margin:0; 
+    overflow:hidden; 
+    background:#ffe6f0; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    height:100vh; 
+}
+.slide { 
+    display:none; 
+    flex-direction:column; 
+    align-items:center; 
+    justify-content:center; 
+    text-align:center; 
+    padding:20px; 
+    width:100%; 
+    height:100%; 
+    position:absolute; 
+    top:0; left:0; 
+}
+.slide.active { display:flex; animation:fadeIn 0.5s; }
+h1 { font-size:2.5em; color:#ff4d94; margin-bottom:20px; }
+p { font-size:1.2em; margin-bottom:30px; color:#333; max-width:600px; }
+button { 
+    padding:10px 20px; 
+    font-size:1em; 
+    background:#ff4d94; 
+    border:none; 
+    color:#fff; 
+    border-radius:10px; 
+    cursor:pointer; 
+    margin:5px; 
+    transition:0.3s; 
+    position:relative; 
+    font-family: 'Dancing Script', cursive;
+}
+button:hover { background:#e60073; }
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+.hearts { position:absolute; width:100%; height:100%; pointer-events:none; overflow:hidden; }
+.heart { position:absolute; color:red; font-size:24px; animation:floatUp 3s linear infinite; }
+@keyframes floatUp { 0% { transform:translateY(100vh) rotate(0deg); opacity:1; } 100% { transform:translateY(-50px) rotate(360deg); opacity:0; } }
+.confetti { position:absolute; width:10px; height:10px; background-color: #ff4d94; pointer-events:none; }
+</style>
+</head>
+<body>
+<audio id="bgMusic" src="GoldenBrown.mp3" autoplay loop></audio>
+<div class="hearts"></div>
+
+<!-- Slides -->
+<div class="slide active" id="slide1">
+<h1>Hey Deni 😘</h1>
+<p>I made this just for you 💖</p>
+<button onclick="nextSlide()">Next</button>
+</div>
+
+<!-- Do you like me -->
+<div class="slide" id="slide2">
+  <h1>Do you like me? 😏</h1>
+  <div>
+    <button id="likeYes">Yes</button>
+    <button id="likeNo">No</button>
+  </div>
+</div>
+
+<!-- Heartfelt message -->
+<div class="slide" id="slide3">
+<h1>Yay! 💖</h1>
+<p>
+Deni you are the most amazing person I’ve ever met 😍 Every moment we share even the small ones makes my heart so full 💖 Your smile your laugh the way you care about the little things 🌸 it all makes me fall for you more every single day 🥰 I think about you constantly 💭 and I just want to make you happy in every way I can 💕 I hope we can share so many more memories together 🌈 laugh until our cheeks hurt 😄 and be there for each other no matter what 💞 You truly mean the world to me 🌎 and I feel so lucky to know someone as wonderful as you 💖💐
+</p>
+<button onclick="goToTired()">Next</button>
+</div>
+
+<!-- Are you tired -->
+<div class="slide" id="slide4">
+<h1>Are you tired 😴</h1>
+<p>Try and relax, yk 💖</p>
+<div>
+    <button id="tiredYes">Yes</button>
+    <button id="tiredNo">No</button>
+</div>
+</div>
+
+<!-- Moving No slide -->
+<div class="slide" id="slide5">
+<h1>Hmm 😅</h1>
+<p>You really should rest 😏💖</p>
+<div>
+    <button id="movingNo">No</button>
+    <button id="movingYes">Yes</button>
+</div>
+</div>
+
+<!-- Exams encouragement -->
+<div class="slide" id="slide6">
+<h1>💖 Don’t stress 💖</h1>
+<p>I know you have exams, but don’t stress about it 😘✨</p>
+</div>
+
+<script>
+// Slides logic
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+function nextSlide() {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+}
+
+// Go to tired slide from heartfelt part
+function goToTired() {
+    slides[current].classList.remove('active');
+    current = 3; // tired slide index
+    slides[current].classList.add('active');
+}
+
+// Hearts animation
+const heartsContainer = document.querySelector('.hearts');
+setInterval(() => {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random()*30 + 15) + 'px';
+    heart.innerText = '❤️';
+    heartsContainer.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 3000);
+}, 500);
+
+// Confetti effect
+function launchConfetti() {
+    for(let i=0; i<100; i++) {
+        const conf = document.createElement('div');
+        conf.classList.add('confetti');
+        conf.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+        conf.style.left = Math.random()*100 + 'vw';
+        conf.style.top = Math.random()*100 + 'vh';
+        conf.style.width = Math.random()*10 + 5 + 'px';
+        conf.style.height = conf.style.width;
+        conf.style.opacity = 1;
+        conf.style.position = 'absolute';
+        document.body.appendChild(conf);
+        let dx = (Math.random()-0.5)*10;
+        let dy = Math.random()*-10;
+        let gravity = 0.5;
+        let fade = setInterval(() => {
+            dy += gravity*0.1;
+            conf.style.top = parseFloat(conf.style.top) + dy + 'px';
+            conf.style.left = parseFloat(conf.style.left) + dx + 'px';
+            conf.style.opacity -= 0.02;
+            if(conf.style.opacity <= 0) {
+                conf.remove();
+                clearInterval(fade);
+            }
+        }, 16);
+    }
+}
+
+// Autoplay fallback for music
+window.addEventListener('load', () => {
+  const music = document.getElementById('bgMusic');
+  music.volume = 0.3;
+  music.play().catch(e => { console.log('Autoplay blocked', e); });
+});
+
+// "Do you like me" moving No logic
+const likeYesBtn = document.getElementById('likeYes');
+const likeNoBtn = document.getElementById('likeNo');
+let likeMove;
+
+likeNoBtn.addEventListener('mouseover', () => {
+  likeNoBtn.style.position = 'absolute';
+  likeMove = setInterval(() => {
+    likeNoBtn.style.top = Math.random() * 80 + 'vh';
+    likeNoBtn.style.left = Math.random() * 80 + 'vw';
+  }, 200);
+});
+
+likeYesBtn.addEventListener('click', () => {
+  clearInterval(likeMove);
+  slides[current].classList.remove('active');
+  current = 2; // heartfelt slide
+  slides[current].classList.add('active');
+  launchConfetti();
+});
+
+// "Are you tired" logic
+const tiredYesBtn = document.getElementById('tiredYes');
+const tiredNoBtn = document.getElementById('tiredNo');
+
+tiredYesBtn.addEventListener('click', () => {
+    slides[current].classList.remove('active');
+    current = 5; // exams encouragement
+    slides[current].classList.add('active');
+});
+
+tiredNoBtn.addEventListener('click', () => {
+    slides[current].classList.remove('active');
+    current = 4; // moving no slide
+    slides[current].classList.add('active');
+});
+
+// Moving No slide logic
+const movingNoBtn = document.getElementById('movingNo');
+const movingYesBtn = document.getElementById('movingYes');
+let moveInterval;
+
+movingNoBtn.addEventListener('mouseover', () => {
+    moveInterval = setInterval(() => {
+        movingNoBtn.style.position = 'absolute';
+        movingNoBtn.style.top = Math.random()*80 + 'vh';
+        movingNoBtn.style.left = Math.random()*80 + 'vw';
+    }, 200);
+});
+
+movingYesBtn.addEventListener('click', () => {
+    clearInterval(moveInterval);
+    slides[current].classList.remove('active');
+    current = 5; // exams encouragement slide
+    slides[current].classList.add('active');
+});
+</script>
+</body>
+</html>
